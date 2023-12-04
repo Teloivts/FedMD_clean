@@ -132,20 +132,22 @@ def train_models(models, X_train, y_train, X_test, y_test,
                               "train_loss": model.history.history["loss"], 
                               "val_loss": model.history.history["val_loss"]})
         
+        #patch
+        save_dir = './models/'
         if save_dir is not None:
             save_dir_path = os.path.abspath(save_dir)
             #make dir
             try:
                 os.makedirs(save_dir_path)
             except OSError as e:
-                if e.errno != errno.EEXIST:
-                    raise    
+                pass
 
             if save_names is None:
-                file_name = save_dir + "model_{0}".format(n) + ".h5"
+                file_name = save_dir + "model_{0}".format(n) + ".keras"
             else:
-                file_name = save_dir + save_names[n] + ".h5"
+                file_name = save_dir + save_names[n] + ".keras"
             model.save(file_name)
+        save_dir = None
     
     print("pre-train accuracy: ")
     print(resulting_val_acc)
